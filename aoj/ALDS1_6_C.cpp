@@ -1,24 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-int partition(vector<int> &A, int p, int r) {
-  int x = A[r];
+int partition(vector<string> &AString, vector<int> &ANumber, int p, int r) {
+  int x = ANumber[r];
   int i = p - 1;
   for(int j = p; j < r; j ++) {
-    if(A[j] <= x) {
+    if(ANumber[j] <= x) {
       i = i + 1;
-      swap(A[i], A[j]);
+      swap(ANumber[i], ANumber[j]);
+      swap(AString[i], AString[j]);
     }
   }
-  swap(A[i + 1], A[r]);
+  swap(ANumber[i + 1], ANumber[r]);
+  swap(AString[i + 1], AString[r]);
   return i + 1;
 }
 
 
-int quicksort(vector<int> &A, int p, int r) {
+void quicksort(vector<string> &AString, vector<int> &ANumber, int p, int r) {
   if(p < r) {
-    q = partition(A, p, r);
-    quickSort(A, p, q - 1);
-    quickSort(A, q + 1, r);
+    int q = partition(AString, ANumber, p, r);
+    quicksort(AString, ANumber, p, q - 1);
+    quicksort(AString, ANumber, q + 1, r);
   }
 }
 
@@ -26,27 +28,24 @@ int main()
 {
   int n;
   cin >> n;
-  vector<vector<int>> A(n, vector<int>(2));
+  vector<string>AString(n);
+  vector<int>ANumber(n);
+
+  map<int, vector<string>> Amap;
+
   for (int i = 0; i < n; i++)
   {
-    cin >> A.at(i).at(0);
-    cin >> A.at(i).at(1);
+    cin >> AString[i];
+    cin >> ANumber[i];
+
+    Amap[ANumber][0] = AString;
   }
 
-  int result = partition(A, 0, n - 1);
+  quicksort(AString, ANumber, 0, n - 1);
 
   for (int i = 0; i < n; i++)
   {
-    if (i == result) {
-      cout << "[" << A[i] << "]";
-    } else {
-      cout << A[i];
-    }
-    if (i == n - 1) {
-      cout << endl;
-    } else {
-      cout << " ";
-    }
+    cout << AString[i] << " " << ANumber[i] << endl;
   }
 
 
