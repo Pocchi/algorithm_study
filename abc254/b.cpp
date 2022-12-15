@@ -25,11 +25,7 @@ int main()
       else
       {
         tmpArray[i] = array[i - 1] + array[i];
-        cout << tmpArray[i];
-        if (i != 0)
-        {
-          cout << " ";
-        }
+        cout << tmpArray[i] << " ";
       }
     }
     array = tmpArray;
